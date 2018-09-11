@@ -1,5 +1,6 @@
 package com.mmall.service.impl;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import com.mmall.common.Const;
 import com.mmall.common.ServerResponse;
 import com.mmall.common.TokenCache;
 import com.mmall.dao.UserMapper;
+import com.mmall.pojo.Category;
 import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
 import com.mmall.utill.MD5Util;
@@ -179,4 +181,18 @@ public class UserServiceImpl implements IUserService {
 		user.setPassword(StringUtils.EMPTY);
 		return ServerResponse.createBySuccess(user);
 	}
+
+	//backend
+	/**
+	 * 检验是否为管理员
+	 * @param user
+	 * @return
+	 */
+	public ServerResponse checkAdminRole(User user) {
+		if(user != null && user.getRole().intValue() == Const.Role.ROLE_ADMIN) {
+			return ServerResponse.createBySuccess();
+		}
+		return ServerResponse.createByError();
+	}
+
 }
